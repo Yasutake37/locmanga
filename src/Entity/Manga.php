@@ -50,7 +50,7 @@ class Manga
 
     public function __toString()
     {
-        return $this->titre;
+        return $this->titre . ' - N°' . $this->numeros;
     }
 
     public function getId(): ?int

@@ -15,6 +15,7 @@ class FormMangaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
             ->add('nom', TextType::class, [
                 'required' => true
@@ -24,11 +25,15 @@ class FormMangaType extends AbstractType
             ])
             ->add('manga', EntityType::class,
             [
+                //mapping classe Manga
                 'class' => Manga::class,
-                'choice_label' => 'titre',
+                //pas de choix multiple
                 'multiple' => false,
+                //selecteur simple
                 'expanded' => false,
+                //champ requis
                 'required' => true
+                //pas de choice_label : la méthode __toString est appelée
             ])
         ;
     }
