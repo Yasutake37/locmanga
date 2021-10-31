@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Commande;
+use App\Entity\Manga;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,14 +17,19 @@ class FormMangaType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'mapped' => false
+                'required' => true
             ])
             ->add('email', EmailType::class, [
-                'mapped' => false
+                'required' => true
             ])
-            ->add('etat')
-            ->add('mangas')
-            ->add('series')
+            ->add('manga', EntityType::class,
+            [
+                'class' => Manga::class,
+                'choice_label' => 'titre',
+                'multiple' => false,
+                'expanded' => false,
+                'required' => true
+            ])
         ;
     }
 

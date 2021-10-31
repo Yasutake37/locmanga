@@ -24,15 +24,27 @@ class Commande
      */
     private $etat;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Manga::class, inversedBy="commandes")
-     */
-    private $mangas;
+
 
     /**
      * @ORM\ManyToMany(targetEntity=Series::class, inversedBy="commandes")
      */
     private $series;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $email;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Manga::class, inversedBy="commandes")
+     */
+    private $manga;
 
     public function __construct()
     {
@@ -57,29 +69,7 @@ class Commande
         return $this;
     }
 
-    /**
-     * @return Collection|Manga[]
-     */
-    public function getMangas(): Collection
-    {
-        return $this->mangas;
-    }
 
-    public function addManga(Manga $manga): self
-    {
-        if (!$this->mangas->contains($manga)) {
-            $this->mangas[] = $manga;
-        }
-
-        return $this;
-    }
-
-    public function removeManga(Manga $manga): self
-    {
-        $this->mangas->removeElement($manga);
-
-        return $this;
-    }
 
     /**
      * @return Collection|Series[]
@@ -101,6 +91,42 @@ class Commande
     public function removeSeries(Series $series): self
     {
         $this->series->removeElement($series);
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getManga(): ?Manga
+    {
+        return $this->manga;
+    }
+
+    public function setManga(?Manga $manga): self
+    {
+        $this->manga = $manga;
 
         return $this;
     }

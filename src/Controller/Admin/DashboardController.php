@@ -16,11 +16,12 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        $commandes = $this->getDoctrine()->getRepository(Commande::class)->count([]);
+        $commandes = $this->getDoctrine()->getRepository(Commande::class)->findBy(['etat' => 0]);
        
- 
+        $commandesCount = count($commandes);
+
         return $this->render('dashboard.html.twig', [
-            'commande' => $commandes,
+            'commande' => $commandesCount,
         ]);
     }
 

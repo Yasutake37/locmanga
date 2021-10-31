@@ -36,9 +36,11 @@ class Manga
     private $serie;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Commande::class, mappedBy="mangas")
+     * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="manga")
      */
     private $commandes;
+
+
 
     public function __construct()
     {
@@ -95,27 +97,32 @@ class Manga
     /**
      * @return Collection|Commande[]
      */
-    public function getCommandes(): ?Collection
+    public function getCommandes(): Collection
     {
         return $this->commandes;
     }
 
-    public function addCommande(?Commande $commande): self
+    public function addCommande(Commande $commande): self
     {
         if (!$this->commandes->contains($commande)) {
             $this->commandes[] = $commande;
-            $commande->addManga($this);
+            $commande->setManga($this);
         }
 
         return $this;
     }
 
-    public function removeCommande(?Commande $commande): self
+    public function removeCommande(Commande $commande): self
     {
         if ($this->commandes->removeElement($commande)) {
-            $commande->removeManga($this);
+            // set the owning side to null (unless already changed)
+            if ($commande->getManga() === $this) {
+                $commande->setManga(null);
+            }
         }
 
         return $this;
     }
+
+
 }
